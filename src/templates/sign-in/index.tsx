@@ -6,7 +6,7 @@ function SignUpTemplate() {
     return (
         <S.Wrapper>
             <S.FormContainer>
-                <InputField title="Nome" textInside="Seu nome aqui" type="text"  />
+                <InputField text="Nome" type="text"  />
             </S.FormContainer>
             <S.ImageContainer>
                 <h1>img aqui</h1>
