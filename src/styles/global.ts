@@ -36,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, button, textarea, input {
+  body, button, textarea, input, label {
     font-family: 'Poppins', sans-serif;
     font-weight: var(--regular);
     outline: 0;
@@ -53,7 +53,7 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: var(--semiBold);
   }
 
-  button {
+  button, img {
     cursor: pointer;
   }
 

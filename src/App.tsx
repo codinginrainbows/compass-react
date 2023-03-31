@@ -1,4 +1,4 @@
-import { SignUpTemplate } from './templates/sign-in';
+import { SignInTemplate } from './templates/sign-in';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from './styles/global';
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <ThemeProvider theme={mainTheme}>
       <GlobalStyle />
-      <SignUpTemplate />
+      <SignInTemplate />
     </ThemeProvider>
   );
 }

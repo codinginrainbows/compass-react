@@ -6,10 +6,11 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     width: 380px;
     background-color: var(--background);
-    border: 1px solid var(--white);
+    border: 2px solid var(--white);
     border-radius: 2rem;
     padding: 0 1rem;
- J   `
+    margin-top: var(--default);
+`
 
 export const Input = styled.input`
     width: 300px;
