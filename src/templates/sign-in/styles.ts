@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
     overflow: hidden;
 `
 
-export const FormContainer = styled.div`
+export const Content = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,11 +15,20 @@ export const FormContainer = styled.div`
     width: 50%;
 `
 
+export const InfoContainer = styled.section`
+    width: 360px;
+    margin-bottom: 10rem;
+`
+
 export const Title = styled.h1``
 
 export const MinorTitle = styled.h4``
 
-export const Form = styled.form``
+export const Form = styled.form`
+    div {
+        margin: 1rem 0;
+    }
+`
 
 export const LinkText = styled.div``
 

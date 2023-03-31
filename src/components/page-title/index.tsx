@@ -1,11 +1,11 @@
 import * as S from './styles'
 
-interface TitleProps {
+interface PageTitleProps {
     content: string;
 }
 
-function Title({ content }: TitleProps) {
+function PageTitle({ content }: PageTitleProps) {
     return <S.Title>{ content }</S.Title>
 }
 
-export { Title }
+export { PageTitle }
