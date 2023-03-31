@@ -1,7 +1,6 @@
 import { SubmitButton } from "../../components/button"
 import { InputField } from "../../components/input-field"
 import { InputTitle } from "../../components/input-title"
-import { PageTitle } from "../../components/page-title"
 
 import userIcon from "../../assets/icons/user-icon.svg"
 import fingerPrintIcon from "../../assets/icons/finger-print-icon.svg"
@@ -11,15 +10,13 @@ import lockIcon from "../../assets/icons/lock-icon.svg"
 import shieldIcon from "../../assets/icons/shield-icon.svg"
 
 import * as S from './styles'
+import { FormHeader } from "../../components/form-header"
 
 function SignUpTemplate() {
     return (
         <S.Wrapper>
             <S.Content>
-                <S.InfoContainer>
-                    <PageTitle content="Olá," />
-                    <S.MinorTitle>Por favor, registre-se para continuar</S.MinorTitle>
-                </S.InfoContainer>
+                <FormHeader title="Olá," subTitle="Por favor, registre-se para continuar" />
                 <S.Form>
                     <InputTitle content="Registro" />
                     <InputField text="Nome" type="text" icon={userIcon} />

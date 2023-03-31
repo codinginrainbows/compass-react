@@ -9,4 +9,5 @@ export const Button = styled.button`
     padding: 19px 24px;
     font-weight: var(--bold);
     margin: var(--default) 0;
+    font-size: var(--default);
 `

@@ -15,17 +15,6 @@ export const Content = styled.div`
     width: 50%;
 `
 
-export const InfoContainer = styled.section`
-    width: 380px;
-    margin-bottom: 8rem;
-`
-
-export const Title = styled.h1``
-
-export const MinorTitle = styled.h4`
-    font-weight: var(--regular);
-`
-
 export const Form = styled.form``
 
 export const LinkText = styled.div`
@@ -34,6 +23,7 @@ export const LinkText = styled.div`
     a {
         text-decoration: none;
         color: var(--white);
+        font-weight: var(--bold);
     }
 `
 
@@ -43,7 +33,5 @@ export const BannerCompass = styled.div`
     background-size: cover;
     z-index: 999;
 `
-
-export const Image = styled.img``
 
 
