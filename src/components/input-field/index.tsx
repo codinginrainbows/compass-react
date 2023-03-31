@@ -2,8 +2,8 @@ import * as S from './styles'
 
 interface InputFieldProps {
     title: string;
-    textInside: string;
-    type: string;
+    textInside?: string;
+    type?: string;
 }
 
 function InputField({title, textInside, type}: InputFieldProps) {
