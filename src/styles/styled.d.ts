@@ -21,6 +21,7 @@ declare module 'styled-components' {
 
     fontWeight: {
         regular: number,
+        semiBold: number,
         bold: number,
     },
   }

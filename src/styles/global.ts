@@ -12,6 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     --large: ${props => props.theme.fontSize.large};
 
     --regular: ${props => props.theme.fontWeight.regular};
+    --semiBold: ${props => props.theme.fontWeight.semiBold}; 
     --bold: ${props => props.theme.fontWeight.bold};
   }
 
@@ -35,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
   }
 
-  body, button, textarea, input {
+  body, button, textarea, input, label {
     font-family: 'Poppins', sans-serif;
     font-weight: var(--regular);
     outline: 0;
@@ -49,10 +50,10 @@ export const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3, h4, h5, h6, strong {
     color: var(--title);
-    font-weight: var(--bold);
+    font-weight: var(--semiBold);
   }
 
-  button {
+  button, img {
     cursor: pointer;
   }
 

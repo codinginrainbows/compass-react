@@ -19,11 +19,8 @@ export default {
 
     fontWeight: {
         regular: 400,
-<<<<<<< HEAD
-        bold: 500,
-=======
-        bold: 700,
->>>>>>> 93200fb644b5aff665262e6fe91d5058365edb92
+        semiBold: 500,
+        bold: 600,
     },
 
 }

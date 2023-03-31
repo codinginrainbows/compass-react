@@ -1,34 +1,34 @@
+import { SubmitButton } from "../../components/button"
 import { InputField } from "../../components/input-field"
+import { InputTitle } from "../../components/input-title"
+import { PageTitle } from "../../components/page-title"
+
+import userIcon from "../../assets/icons/user-icon.svg"
+import lockIcon from "../../assets/icons/lock-icon.svg"
 
 import * as S from './styles'
 
-import BannerCompass from "images/banner-compass.svg"
-
-function SignUpTemplate() {
+function SignInTemplate() {
     return (
         <S.Wrapper>
-            <S.FormContainer>
-<<<<<<< HEAD
-                <InputField text="Nome" type="text"  />
-=======
-                <S.Title>Olá,</S.Title>
-                <S.MinorTitle>Por favor, registre-se para continuar</S.MinorTitle>
+            <S.Content>
+                <S.InfoContainer>
+                    <PageTitle content="Olá," />
+                    <S.MinorTitle>Para continuar navegando de forma segura, efetue o login</S.MinorTitle>
+                </S.InfoContainer>
                 <S.Form>
-                    <InputField text="Nome" type="text" />
-                    <InputField text="Usuário" type="text" />
-                    <InputField text="Nascimento" type="text" />
-                    <InputField text="Email" type="text" />
-                    <InputField text="Senha" type="text" />
-                    <InputField text="Confirmar Senha" type="text" />
+                    <InputTitle content="Login" />
+                    <InputField text="Nome" type="text" icon={userIcon} />
+                    <InputField text="Senha" type="password" icon={lockIcon} />
+                    <SubmitButton title="Logar-se" />
                 </S.Form>
                 <S.LinkText>
-                    Já possui uma conta? <a>Faça Login</a>
+                    Novo por aqui? <a href="/">Registre-se</a>
                 </S.LinkText>
->>>>>>> 93200fb644b5aff665262e6fe91d5058365edb92
-            </S.FormContainer>
-            <S.ImageContainer />
+            </S.Content>
+            <S.BannerCompass />
         </S.Wrapper>
     )
 }
 
-export { SignUpTemplate }
+export { SignInTemplate }
