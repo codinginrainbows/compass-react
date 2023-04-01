@@ -4,7 +4,6 @@ export const Wrapper = styled.div`
     height: 100vh;
     display: flex;
     align-items: stretch;
-    overflow: hidden;
 `
 
 export const Content = styled.div`

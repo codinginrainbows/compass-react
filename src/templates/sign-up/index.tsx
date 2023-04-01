@@ -1,6 +1,8 @@
 import { SubmitButton } from "../../components/button"
-import { InputField } from "../../components/input-field"
-import { InputTitle } from "../../components/input-title"
+import { FormTitle } from "../../components/form-title"
+import { TextField } from "../../components/text-field"
+import { FormHeader } from "../../components/form-header"
+import { TextLink } from "../../components/text-link"
 
 import userIcon from "../../assets/icons/user-icon.svg"
 import fingerPrintIcon from "../../assets/icons/finger-print-icon.svg"
@@ -10,8 +12,6 @@ import lockIcon from "../../assets/icons/lock-icon.svg"
 import shieldIcon from "../../assets/icons/shield-icon.svg"
 
 import * as S from './styles'
-import { FormHeader } from "../../components/form-header"
-import { Link } from "react-router-dom"
 
 function SignUpTemplate() {
     return (
@@ -19,18 +19,16 @@ function SignUpTemplate() {
             <S.Content>
                 <FormHeader title="Olá," subTitle="Por favor, registre-se para continuar" />
                 <S.Form>
-                    <InputTitle content="Registro" />
-                    <InputField text="Nome" type="text" icon={userIcon} />
-                    <InputField text="Usuário" type="text" icon={fingerPrintIcon} />
-                    <InputField text="Nascimento" type="text" icon={cakeIcon} />
-                    <InputField text="Email" type="text" icon={emailIcon} />
-                    <InputField text="Senha" type="password" icon={lockIcon} />
-                    <InputField text="Confirmar Senha" type="password" icon={shieldIcon} />
-                    <SubmitButton title="Registrar-se" />
+                    <FormTitle content="Registro" />
+                    <TextField content="Nome" type="text" icon={userIcon} />
+                    <TextField content="Usuário" type="text" icon={fingerPrintIcon} />
+                    <TextField content="Nascimento" type="text" icon={cakeIcon} />
+                    <TextField content="Email" type="text" icon={emailIcon} />
+                    <TextField content="Senha" type="password" icon={lockIcon} />
+                    <TextField content="Confirmar Senha" type="password" icon={shieldIcon} />
+                    <SubmitButton content="Registrar-se" />
                 </S.Form>
-                <S.LinkText>
-                    Já possui uma conta? <Link to="/">Faça Login</Link>
-                </S.LinkText>
+                <TextLink where="/" link="Faça Login" textBefore="Já possui uma conta?" />
             </S.Content>
             <S.BannerCompass />
         </S.Wrapper>

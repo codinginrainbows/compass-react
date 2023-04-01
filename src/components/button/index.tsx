@@ -1,11 +1,11 @@
 import * as S from './styles'
 
 interface ButtonProps {
-    title: string;
+    content: string;
 }
 
-function SubmitButton({ title }: ButtonProps) {
-    return <S.Button type="submit">{ title }</S.Button>
+function SubmitButton({ content }: ButtonProps) {
+    return <S.Button type="submit">{ content }</S.Button>
 }
 
 export { SubmitButton }
