@@ -13,5 +13,3 @@
 ### 3: `git checkout master` para acessar a branch principal
 ### 4: `yarn` para instalar as dependências do projeto
 ### 5: `yarn start` para rodar o projeto
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
