@@ -1,18 +1,26 @@
-import * as yup from "yup";
+import { joiResolver } from '@hookform/resolvers/joi'
+import Joi from 'joi'
 
-export const SignInValidationSchema = yup.object({
-    user: yup
-    .string()
-    .required('Preencha o nome')
-    .matches(
-      /^admin$/,
-      ""
-    ),
-    password: yup
-    .string()
-    .required('Preencha a senha')
-    .matches(
-      /^admin$/,
-      ""
-    ),
-}).required();
+export const defaultValues = {
+  user: '',
+  password: '',
+}
+
+export const SignInValidationSchema = joiResolver(
+  Joi.object({
+    user: Joi
+      .string()
+      .required()
+      .trim()
+      .messages({
+        'string.empty': 'Preencha o nome de usuário',
+      }),
+    password: Joi
+      .string()
+      .required()
+      .trim()
+      .messages({
+        'string.empty': 'Preencha a senha',
+      }),
+  })
+)

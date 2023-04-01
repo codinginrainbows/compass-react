@@ -14,7 +14,11 @@ export const Content = styled.div`
     width: 50%;
 `
 
-export const Form = styled.form``
+export const Form = styled.form`
+    .input-invalid {
+        border: 2px solid var(--yellow);
+    }
+`
 
 export const LinkText = styled.div`
     color: var(--white);

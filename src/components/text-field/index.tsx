@@ -1,17 +1,20 @@
+import { InputHTMLAttributes } from 'react';
 import * as S from './styles'
 
-interface TextFieldProps {
+interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
     content: string;
     type?: string;
     icon?: any;
 }
 
-function TextField({ content, type, icon }: TextFieldProps) {
+function TextField(props: TextFieldProps) {
     return (
-        <S.Wrapper>
-            <S.Input type={type} placeholder={content} />
-            <S.Icon src={icon} />
-        </S.Wrapper>
+        <>
+            <S.Input {...props} placeholder={props.content} />
+            <S.Wrapper>
+                <S.Icon src={props.icon} />
+            </S.Wrapper>
+        </>
     )
 }
 
