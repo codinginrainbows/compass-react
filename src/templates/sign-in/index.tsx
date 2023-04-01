@@ -7,6 +7,7 @@ import lockIcon from "../../assets/icons/lock-icon.svg"
 
 import * as S from './styles'
 import { FormHeader } from "../../components/form-header"
+import { Link } from "react-router-dom"
 
 function SignInTemplate() {
     return (
@@ -20,7 +21,7 @@ function SignInTemplate() {
                     <SubmitButton title="Logar-se" />
                 </S.Form>
                 <S.LinkText>
-                    Novo por aqui? <a href="/">Registre-se</a>
+                    Novo por aqui? <Link to="/sign-up">Registre-se</Link>
                 </S.LinkText>
             </S.Content>
             <S.BannerCompass />

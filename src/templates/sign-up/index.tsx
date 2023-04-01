@@ -11,6 +11,7 @@ import shieldIcon from "../../assets/icons/shield-icon.svg"
 
 import * as S from './styles'
 import { FormHeader } from "../../components/form-header"
+import { Link } from "react-router-dom"
 
 function SignUpTemplate() {
     return (
@@ -28,7 +29,7 @@ function SignUpTemplate() {
                     <SubmitButton title="Registrar-se" />
                 </S.Form>
                 <S.LinkText>
-                    Já possui uma conta? <a href="/">Faça Login</a>
+                    Já possui uma conta? <Link to="/">Faça Login</Link>
                 </S.LinkText>
             </S.Content>
             <S.BannerCompass />
