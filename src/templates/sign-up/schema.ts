@@ -34,7 +34,7 @@ export const SignUpValidationSchema = joiResolver(
         'string.min': 'Nome de usuário deve conter no mínimo 3 caracteres',
         'string.max': 'Nome de usuário deve conter no máximo 20 caracteres',
       }),
-      birth: Joi
+    birth: Joi
       .string()
       .required()
       .min(10)
