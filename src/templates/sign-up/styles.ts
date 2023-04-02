@@ -17,7 +17,7 @@ export const Content = styled.div`
 `
 
 export const Form = styled.form`
-    width: 400px;
+    width: 385px;
     padding: 2rem 0;
 
     .input-invalid {
