@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: stretch;
 `
@@ -15,6 +15,9 @@ export const Content = styled.div`
 `
 
 export const Form = styled.form`
+    width: 400px;
+    padding: 2rem 0;
+
     .input-invalid {
         border: 2px solid var(--yellow);
     }
@@ -34,7 +37,6 @@ export const BannerCompass = styled.div`
     width: 50%;
     background-image: url('/images/banner-compass.svg');
     background-size: cover;
-    z-index: 999;
 `
 
 
