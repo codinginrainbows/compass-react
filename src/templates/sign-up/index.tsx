@@ -39,7 +39,7 @@ function SignUpTemplate() {
 
     useEffect(() => {
         setValue('birth', MaskedDate(birthInputValue))
-    }, [birthInputValue])
+    }, [birthInputValue, setValue])
 
     const handleSubmitForm = ({ user }: ISignUp) => {
         if(user === 'admin') {
