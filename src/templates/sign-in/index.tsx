@@ -13,6 +13,7 @@ import { SignInValidationSchema, defaultValues } from "./schema"
 import { ErrorMessage } from "../../components/error-message"
 import { useState } from "react"
 import { ISignIn } from "../../models/sign-in"
+import { toast } from "react-toastify"
 
 import * as S from './styles'
 
@@ -30,10 +31,10 @@ function SignInTemplate() {
     const handleSubmitForm = ({ user, password }: ISignIn) => {
         if(user !== 'admin' || password !== 'admin') {
             setCheckCredentials(false)
-            console.log('CREDENCIAIS INVÁLIDAS')
+            toast.error('CREDENCIAIS INVÁLIDAS')
         } else {
             setCheckCredentials(true)
-            console.log('LOGADO COM SUCESSO')
+            toast.success('LOGADO COM SUCESSO')
         }
     };
 

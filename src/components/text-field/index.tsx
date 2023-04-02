@@ -10,7 +10,7 @@ interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 function TextField(props: TextFieldProps) {
     return (
         <>
-            <S.Input {...props} placeholder={props.content} />
+            <S.Input {...props} placeholder={props.content} autoComplete='off' />
             <S.Wrapper>
                 <S.Icon src={props.icon} />
             </S.Wrapper>

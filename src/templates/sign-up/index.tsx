@@ -11,13 +11,15 @@ import emailIcon from "../../assets/icons/email-icon.svg"
 import lockIcon from "../../assets/icons/lock-icon.svg"
 import shieldIcon from "../../assets/icons/shield-icon.svg"
 
-import * as S from './styles'
 import { Controller, useForm } from "react-hook-form"
 import { SignUpValidationSchema, defaultValues } from "./schema"
 import { useEffect, useState } from "react"
 import { ISignUp } from "../../models/sign-up"
 import { MaskedDate } from "../../utils/date-mask"
+import { toast } from "react-toastify"
 import { ErrorMessage } from "../../components/error-message"
+
+import * as S from './styles'
 
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
@@ -33,19 +35,19 @@ function SignUpTemplate() {
     })
 
     const birthInputValue = watch('birth')
+    const userInputValue = watch('user')
 
     useEffect(() => {
-        console.log(birthInputValue)
         setValue('birth', MaskedDate(birthInputValue))
     }, [birthInputValue])
 
     const handleSubmitForm = ({ user }: ISignUp) => {
         if(user === 'admin') {
             setCheckCredentials(false)
-            console.log('USUÁRIO JÁ EXISTE')
+            toast.error(`USUÁRIO ${userInputValue} JÁ EXISTE`)
         } else {
             setCheckCredentials(true)
-            console.log('CONTA CRIADA COM SUCESSO')
+            toast.success(`${userInputValue} SUA CONTA FOI CRIADA`)
         }
     };
     
