@@ -1,4 +1,4 @@
-# Desafio 1 da Bolsa FullStack Compass.UOL
+# ACESSO: https://gabrielgarcia-compassuol.netlify.app
 
 ## CREDENCIAIS PARA LOGAR:
 
