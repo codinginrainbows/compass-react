@@ -20,34 +20,43 @@ import { toast } from "react-toastify"
 import { ErrorMessage } from "../../components/error-message"
 
 import * as S from './styles'
+import { useAccount } from "../../hooks/account"
 
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
+    
+    const { createAccount } = useAccount()
 
     const {
         control,
         handleSubmit,
         setValue,
-        watch
+        watch,
+        getValues,
     } = useForm({
         resolver: SignUpValidationSchema,
         defaultValues: defaultValues,
     })
 
     const birthInputValue = watch('birth')
-    const userInputValue = watch('user')
 
     useEffect(() => {
         setValue('birth', MaskedDate(birthInputValue))
     }, [birthInputValue, setValue])
+    
 
     const handleSubmitForm = ({ user }: ISignUp) => {
+        const userValue = getValues('user')
+        const passwordValue = getValues('password')
+
         if(user === 'admin') {
             setCheckCredentials(false)
-            toast.error(`USUÁRIO ${userInputValue} JÁ EXISTE`)
+            toast.error(`USUÁRIO ${userValue} JÁ EXISTE`)
         } else {
             setCheckCredentials(true)
-            toast.success(`${userInputValue} SUA CONTA FOI CRIADA`)
+            toast.success(`${userValue} SUA CONTA FOI CRIADA`)
+
+            createAccount(userValue, passwordValue)
         }
     };
     
