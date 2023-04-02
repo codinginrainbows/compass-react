@@ -11,16 +11,24 @@ export const SignInValidationSchema = joiResolver(
     user: Joi
       .string()
       .required()
+      .min(3)
+      .max(20)
       .trim()
       .messages({
         'string.empty': 'Preencha o nome de usuário',
+        'string.min': 'Nome de usuário deve conter no mínimo 3 caracteres',
+        'string.max': 'Nome de usuário deve conter no máximo 20 caracteres',
       }),
     password: Joi
       .string()
       .required()
+      .min(3)
+      .max(20)
       .trim()
       .messages({
         'string.empty': 'Preencha a senha',
+        'string.min': 'Senha deve conter no mínimo 3 caracteres',
+        'string.max': 'Senha deve conter no máximo 20 caracteres',
       }),
   })
 )

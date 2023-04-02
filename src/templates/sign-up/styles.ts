@@ -14,7 +14,14 @@ export const Content = styled.div`
     width: 50%;
 `
 
-export const Form = styled.form``
+export const Form = styled.form`
+    width: 400px;
+    padding: 2rem 0;
+
+    .input-invalid {
+        border: 2px solid var(--yellow);
+    }
+`
 
 export const LinkText = styled.div`
     color: var(--white);
@@ -30,7 +37,6 @@ export const BannerCompass = styled.div`
     width: 50%;
     background-image: url('/images/banner-compass.svg');
     background-size: cover;
-    z-index: 999;
 `
 
 

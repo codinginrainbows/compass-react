@@ -11,21 +11,15 @@ import { Controller, useForm } from "react-hook-form"
 
 import { SignInValidationSchema, defaultValues } from "./schema"
 import { ErrorMessage } from "../../components/error-message"
+import { useState } from "react"
+import { ISignIn } from "../../models/sign-in"
 
 import * as S from './styles'
-import { useState } from "react"
-
-interface ISignIn {
-    user: string,
-    password: string
-}
 
 function SignInTemplate() {
-    const [checkCredentials, setCheckCredentials] = useState(false)
+    const [checkCredentials, setCheckCredentials] = useState(true)
 
     const {
-        watch,
-        formState: errors,
         control,
         handleSubmit,
     } = useForm({
@@ -33,13 +27,10 @@ function SignInTemplate() {
         defaultValues: defaultValues,
     })
 
-    const userInputValue = watch('user')
-    // const passwordInputValue = watch('password')
-  
-    const handleSubmitForm = ({user, password}: ISignIn) => {
+    const handleSubmitForm = ({ user, password }: ISignIn) => {
         if(user !== 'admin' || password !== 'admin') {
             setCheckCredentials(false)
-            console.log('CREDENCIAIS INVALIDAS')
+            console.log('CREDENCIAIS INVÁLIDAS')
         } else {
             setCheckCredentials(true)
             console.log('LOGADO COM SUCESSO')
@@ -49,10 +40,11 @@ function SignInTemplate() {
     return (
         <S.Wrapper>
             <S.Content>
-                <FormHeader title="Olá," subTitle="Para continuar navegando de forma segura, efetue o login" />
                 <S.Form onSubmit={handleSubmit(handleSubmitForm)}>
-                    <>
+                    <FormHeader title="Olá," subTitle="Para continuar navegando de forma segura, efetue o login" />
+                    
                     <FormTitle content="Login" />
+                    
                     <Controller
                         name="user"
                         control={control}
@@ -68,10 +60,16 @@ function SignInTemplate() {
                                     icon={userIcon} 
                                     className={error && 'input-invalid'}
                                 />
-                                {error && <ErrorMessage text={error.message}/>}
+                                {error && (
+                                    <>
+                                        <ErrorMessage text={error.message}/>
+                                        {setCheckCredentials(true)}
+                                    </>
+                                )}
                             </>
                         )}
                     />
+                    
                     <Controller
                         name="password"
                         control={control}
@@ -86,17 +84,23 @@ function SignInTemplate() {
                                     type="password" 
                                     icon={lockIcon}
                                     className={error && 'input-invalid'}
-                                    />
-                                {error && <ErrorMessage text={error.message}/>}
+                                />
+                                {error && (
+                                    <>
+                                        <ErrorMessage text={error.message}/>
+                                        {setCheckCredentials(true)}
+                                    </>
+                                )}
                             </>
                         )}
-                    />
+                        />
 
-                    {!checkCredentials && <ErrorMessage text='Usuário ou senha errados'/>}
+                    {!checkCredentials && <ErrorMessage text='Usuário e/ou Senha inválidos. Por favor, tente novamente!'/>}
+                    
                     <SubmitButton content="Logar-se" />
-                    </>
+                    
+                    <TextLink where="/sign-up" link="Registre-se" textBefore="Novo por aqui?" />
                 </S.Form>
-                <TextLink where="/sign-up" link="Registre-se" textBefore="Novo por aqui?" />
             </S.Content>
             <S.BannerCompass />
         </S.Wrapper>

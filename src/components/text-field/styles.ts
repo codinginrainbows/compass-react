@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
     position: relative;
+    width: 380px;
 
     .error {
         border: 2px solid red;
