@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import CompassBanner from '../../assets/banner-compass.svg'
+
 export const Wrapper = styled.div`
     min-height: 100vh;
     display: flex;
@@ -15,7 +17,7 @@ export const Content = styled.div`
 `
 
 export const Form = styled.form`
-    width: 400px;
+    width: 385px;
     padding: 2rem 0;
 
     .input-invalid {
@@ -23,19 +25,9 @@ export const Form = styled.form`
     }
 `
 
-export const LinkText = styled.div`
-    color: var(--white);
-
-    a {
-        text-decoration: none;
-        color: var(--white);
-        font-weight: var(--bold);
-    }
-`
-
 export const BannerCompass = styled.div`
     width: 50%;
-    background-image: url('/images/banner-compass.svg');
+    background-image: url(${CompassBanner});
     background-size: cover;
 `
 
