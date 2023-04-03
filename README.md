@@ -11,7 +11,7 @@
 
 ### 1: `git clone https://github.com/codinginrainbows/compass-react/` para clonar o projeto
 ### 2: `cd compass-react` para acessar o diretório do projeto
-### 3: `git checkout master` para acessar a branch principal
+### 3: `git checkout production` para acessar a branch mais atualizada
 ### 4: `yarn` para instalar as dependências do projeto
 ### 5: `yarn start` para rodar o projeto
 
