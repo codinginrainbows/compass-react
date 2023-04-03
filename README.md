@@ -1,18 +1,47 @@
-# ACESSO: https://gabrielgarcia-compassuol.netlify.app
+# :link: https://gabrielgarcia-compassuol.netlify.app
 
-## FEATURES:
+## :file_folder: Index
+* [Features](#hammer-features)
+* [Technologies](#rocket-technologies)
+* [Color Scheme](#paintbrush-color-scheme)
+* [Setup Local](#gear-setup)
+* [Developpers](#man_technologist-developers)
 
-### • É possível criar uma conta para si mesmo e usá-la para LOGAR.
-### • Validação dos campos de ambos os formulários em tempo real antes do submit.
-### • Se tentar REGISTRAR-SE com o nome de usuário de seu usuário já criado receberá notificação de erro após submit do formulário.
-### • Se tentar LOGAR-SE com credenciais que não sejam as escolhidas na criação de conta receberá notificação de erro após submit do formulário.
+## :hammer: Features
 
-## PARA RODAR ESTE PROJETO LOCALMENTE:
+- [x] It is possible to REGISTER and use your credentials (`user` and `password`) to LOGIN.
+- [x] If you try to REGISTER with a `user` that already exists, you will receive an error notification after submitting the form.
+- [x] If you try to LOGIN with credentials other than those chosen when creating your account, you will receive an error notification after submitting the form.
+- [x] Real-time validation of both form fields before submission.
 
-### 1: `git clone https://github.com/codinginrainbows/compass-react/` para clonar o projeto
-### 2: `cd compass-react` para acessar o diretório do projeto
-### 3: `git checkout master` para acessar a branch principal
-### 4: `yarn` para instalar as dependências do projeto
-### 5: `yarn start` para rodar o projeto
+## :rocket: Technologies
 
+  ✔️ HTML 5 <br>
+  ✔️ CSS 3 <br>
+  ✔️ Styled-Components <br>
+  ✔️ TypeScript <br>
+  ✔️ React <br>
+  ✔️ React Router <br>
+  ✔️ React-Hook-Form <br>
+  ✔️ React Toastify <br>
+  ✔️ Joi <br>
 
+## :paintbrush: Color Scheme
+
+Border/Errors: `#E9B425` <br>
+Buttons: `#AD2D14` <br>
+Background: `#2E2F36` <br>
+
+## :gear: Setup
+
+1. `git clone https://github.com/codinginrainbows/compass-react/` to clone the project
+2. `cd compass-react` to access the project directory
+3. `git checkout production` to access the most updated branch
+4. `yarn` to install project dependencies
+5. `yarn start` to run the project
+6. `http://localhost:3000` in your preferred browser to acess the project
+
+## :man_technologist: Developers
+
+| [<img src="https://avatars.githubusercontent.com/u/82886646?v=4" width=115><br><sub>Gabriel Garcia</sub>](https://github.com/codinginrainbows)
+| :---: |
