@@ -2,7 +2,7 @@
 
 ## FEATURES:
 
-### • É possível criar uma conta para si mesmo e usá-la para LOGAR.
+### • É possível REGISTRAR-SE e usar seu `user` e `password` para LOGAR.
 ### • Validação dos campos de ambos os formulários em tempo real antes do submit.
 ### • Se tentar REGISTRAR-SE com o nome de usuário de seu usuário já criado receberá notificação de erro após submit do formulário.
 ### • Se tentar LOGAR-SE com credenciais que não sejam as escolhidas na criação de conta receberá notificação de erro após submit do formulário.
