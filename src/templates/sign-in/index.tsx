@@ -21,10 +21,7 @@ import { useAccount } from "../../hooks/account"
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
 
-    const { user: userLogin, password: userPassword } = useAccount()
-
-    const userLoginCredentials: string[] = ['admin', userLogin ?? '']
-    const userPasswordCredentials: string[] = ['admin', userPassword ?? '']
+    const { credentials } = useAccount()
 
     const {
         control,
@@ -35,9 +32,9 @@ function SignInTemplate() {
     })
 
     const handleSubmitForm = ({ user: userTyped, password: passwordTyped }: ISignIn) => {
-        if(userLoginCredentials.includes(userTyped) && userPasswordCredentials.includes(passwordTyped)) {
+        if(credentials.user === userTyped && credentials.password === passwordTyped) {
             setCheckCredentials(true)
-            toast.success(`${userTyped} LOGADO COM SUCESSO`)
+            toast.success(`${credentials.user} LOGADO COM SUCESSO`)
         } else {
             setCheckCredentials(false)
             toast.error('CREDENCIAIS INVÁLIDAS')

@@ -25,14 +25,13 @@ import { useAccount } from "../../hooks/account"
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     
-    const { createAccount } = useAccount()
+    const { createAccount, user: userExists, credentials } = useAccount()
 
     const {
         control,
         handleSubmit,
         setValue,
         watch,
-        getValues,
     } = useForm({
         resolver: SignUpValidationSchema,
         defaultValues: defaultValues,
@@ -45,18 +44,15 @@ function SignUpTemplate() {
     }, [birthInputValue, setValue])
     
 
-    const handleSubmitForm = ({ user }: ISignUp) => {
-        const userValue = getValues('user')
-        const passwordValue = getValues('password')
-
-        if(user === 'admin') {
+    const handleSubmitForm = ({ user: userTyped, password: passwordTyped}: ISignUp) => {
+        if(userTyped === credentials.user) {
             setCheckCredentials(false)
-            toast.error(`USUÁRIO ${userValue} JÁ EXISTE`)
+            toast.error(`USUÁRIO ${userTyped} JÁ EXISTE`)
         } else {
             setCheckCredentials(true)
-            toast.success(`${userValue} SUA CONTA FOI CRIADA`)
+            toast.success(`${userTyped} SUA CONTA FOI CRIADA`)
 
-            createAccount(userValue, passwordValue)
+            createAccount(userTyped, passwordTyped)
         }
     };
     

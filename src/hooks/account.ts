@@ -9,11 +9,16 @@ function useAccount() {
   function createAccount(user: string, password: string) {
     localStorage.setItem('user', user)
     localStorage.setItem('password', password)
-    
+
     navigate('/')
   }
+  
+  const credentials = {
+    user: user,
+    password: password
+  }
 
-  return { createAccount, user, password }
+  return { createAccount, user, password, credentials }
 }
 
 export { useAccount }
