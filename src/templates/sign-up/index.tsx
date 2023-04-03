@@ -25,7 +25,7 @@ import { useAccount } from "../../hooks/account"
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     
-    const { createAccount, user: userExists, credentials } = useAccount()
+    const { createAccount, credentials } = useAccount()
 
     const {
         control,
