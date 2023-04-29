@@ -11,11 +11,8 @@ import emailIcon from "../../assets/icons/email-icon.svg"
 import lockIcon from "../../assets/icons/lock-icon.svg"
 import shieldIcon from "../../assets/icons/shield-icon.svg"
 
-import { Controller, useForm } from "react-hook-form"
-import { SignUpValidationSchema, defaultValues } from "./schema"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { ISignUp } from "../../models/sign-up"
-import { MaskedDate } from "../../utils/date-mask"
 import { toast } from "react-toastify"
 import { ErrorMessage } from "../../components/error-message"
 
@@ -24,172 +21,127 @@ import { useAccount } from "../../hooks/account"
 
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
+    const [hasError, setHasError] = useState(false)
+    const [hasErrorUser, setHasErrorUser] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [formValues, setFormValues] = useState<ISignUp>({ name: '', user: '', birth: '', email: '', password: '', confirmPassword: '' })
+
+    const handleChangeValues = (e: any) => {
+        const textFieldName = e.target.name
+        const textFieldValue = e.target.value
+
+        console.log(formValues)
+
+        setFormValues((currentValues => {
+            return {
+                ...currentValues, [textFieldName]: textFieldValue
+            }
+        }))
+    }
     
     const { createAccount, credentials } = useAccount()
 
-    const {
-        control,
-        handleSubmit,
-        setValue,
-        watch,
-    } = useForm({
-        resolver: SignUpValidationSchema,
-        defaultValues: defaultValues,
-    })
+    const signUpValidator = {
+        emptyForm: formValues.name === '' || formValues.birth === '' || formValues.email === '',
+        userAlreadyExists: formValues.user === credentials.user,
+        passwordsDoesNotMatch: formValues.confirmPassword !== formValues.password,
+    }
 
-    const birthInputValue = watch('birth')
-
-    useEffect(() => {
-        setValue('birth', MaskedDate(birthInputValue))
-    }, [birthInputValue, setValue])
-    
-
-    const handleSubmitForm = ({ user: userTyped, password: passwordTyped}: ISignUp) => {
-        if(userTyped === credentials.user) {
+    const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        
+        if (signUpValidator.emptyForm) {
             setCheckCredentials(false)
-            toast.error(`USUÁRIO ${userTyped} JÁ EXISTE`)
+            setErrorMessage('Por favor, preencha todos os campos!')
+        } else if(signUpValidator.userAlreadyExists) {
+            setCheckCredentials(false)
+            setErrorMessage(`Usuário ${formValues.user} já existe!`)
+            toast.error(`USUÁRIO ${formValues.user} JÁ EXISTE`)
+            setHasErrorUser(true)
+            setHasError(false)
+        } else if (signUpValidator.passwordsDoesNotMatch) {
+            setCheckCredentials(false)
+            setErrorMessage('As senhas não correspondem!')
+            setHasError(true)
+            setHasErrorUser(false)
         } else {
             setCheckCredentials(true)
-            toast.success(`${userTyped} SUA CONTA FOI CRIADA`)
+            toast.success(`${formValues.user} SUA CONTA FOI CRIADA`)
 
-            createAccount(userTyped, passwordTyped)
+            createAccount(formValues.user, formValues.password)
         }
+
+        return {}
     };
     
     return (
         <S.Wrapper>
             <S.Content>
-                <S.Form onSubmit={handleSubmit(handleSubmitForm)}>
+                <S.Form onSubmit={handleSubmitForm}>
                     <FormHeader title="Olá," subTitle="Por favor, registre-se para continuar" />
                     
                     <FormTitle content="Registro" />
                     
-                    <Controller
-                        name="name"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Nome" 
-                                    type="text" 
-                                    icon={userIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                    <TextField 
+                        content="Nome" 
+                        type="text" 
+                        icon={userIcon}
+                        fieldName="name"
+                        textValue={formValues.name}
+                        changeEvent={handleChangeValues}
                     />
                     
-                    <Controller
-                        name="user"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Usuário" 
-                                    type="text" 
-                                    icon={fingerPrintIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && (
-                                    <>
-                                        <ErrorMessage text={error.message}/>
-                                        {setCheckCredentials(true)}
-                                    </>
-                                )}
-                            </>
-                        )}
+                    <TextField 
+                        content="Usuário" 
+                        type="text" 
+                        icon={fingerPrintIcon}
+                        fieldName="user"
+                        textValue={formValues.user}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasErrorUser ? 'input-invalid' : ''}
                     />
 
-                    {!checkCredentials && <ErrorMessage text='Usuário já existe!'/>}
+                    {!checkCredentials && <ErrorMessage text={errorMessage.includes('Usuário') ? errorMessage : ''}/>}
                     
-                    <Controller
-                        name="birth"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Data de Nascimento" 
-                                    type="text" 
-                                    icon={cakeIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                     <TextField 
+                        content="Nascimento" 
+                        type="date" 
+                        icon={cakeIcon}
+                        fieldName="birth"
+                        textValue={formValues.birth}
+                        changeEvent={handleChangeValues}
                     />
                     
-                    <Controller
-                        name="email"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Email" 
-                                    type="text" 
-                                    icon={emailIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                     <TextField 
+                        content="Email" 
+                        type="text" 
+                        icon={emailIcon}
+                        fieldName="email"
+                        textValue={formValues.email}
+                        changeEvent={handleChangeValues}
                     />
                     
-                    <Controller
-                        name="password"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Senha" 
-                                    type="password" 
-                                    icon={lockIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                    <TextField 
+                        content="Senha" 
+                        type="password" 
+                        icon={lockIcon}
+                        fieldName="password"
+                        textValue={formValues.password}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
-                    <Controller
-                        name="confirmPassword"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Confirmar Senha" 
-                                    type="password" 
-                                    icon={shieldIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                    <TextField 
+                        content="Confirmar Senha" 
+                        type="password" 
+                        icon={shieldIcon}
+                        fieldName="confirmPassword"
+                        textValue={formValues.confirmPassword}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
+
+                     {!checkCredentials && <ErrorMessage text={!    errorMessage.includes('Usuário') ? errorMessage : ''}/>}
 
                     <SubmitButton content="Registrar-se" />
                     
