@@ -11,11 +11,8 @@ import emailIcon from "../../assets/icons/email-icon.svg"
 import lockIcon from "../../assets/icons/lock-icon.svg"
 import shieldIcon from "../../assets/icons/shield-icon.svg"
 
-import { Controller, useForm } from "react-hook-form"
-import { SignUpValidationSchema, defaultValues } from "./schema"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { ISignUp } from "../../models/sign-up"
-import { MaskedDate } from "../../utils/date-mask"
 import { toast } from "react-toastify"
 import { ErrorMessage } from "../../components/error-message"
 
@@ -25,6 +22,8 @@ import { useAccount } from "../../hooks/account"
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     const [hasError, setHasError] = useState(false)
+    const [hasErrorUser, setHasErrorUser] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [formValues, setFormValues] = useState<ISignUp>({ name: '', user: '', birth: '', email: '', password: '', confirmPassword: '' })
 
     const handleChangeValues = (e: any) => {
@@ -42,10 +41,29 @@ function SignUpTemplate() {
     
     const { createAccount, credentials } = useAccount()
 
-    const handleSubmitForm = () => {
-        if(formValues.user === credentials.user) {
+    const signUpValidator = {
+        emptyForm: formValues.name === '' || formValues.birth === '' || formValues.email === '',
+        userAlreadyExists: formValues.user === credentials.user,
+        passwordsDoesNotMatch: formValues.confirmPassword !== formValues.password,
+    }
+
+    const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        
+        if (signUpValidator.emptyForm) {
             setCheckCredentials(false)
+            setErrorMessage('Por favor, preencha todos os campos!')
+        } else if(signUpValidator.userAlreadyExists) {
+            setCheckCredentials(false)
+            setErrorMessage(`Usuário ${formValues.user} já existe!`)
             toast.error(`USUÁRIO ${formValues.user} JÁ EXISTE`)
+            setHasErrorUser(true)
+            setHasError(false)
+        } else if (signUpValidator.passwordsDoesNotMatch) {
+            setCheckCredentials(false)
+            setErrorMessage('As senhas não correspondem!')
+            setHasError(true)
+            setHasErrorUser(false)
         } else {
             setCheckCredentials(true)
             toast.success(`${formValues.user} SUA CONTA FOI CRIADA`)
@@ -71,20 +89,19 @@ function SignUpTemplate() {
                         fieldName="name"
                         textValue={formValues.name}
                         changeEvent={handleChangeValues}
-                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
                     <TextField 
                         content="Usuário" 
                         type="text" 
-                        icon={userIcon}
+                        icon={fingerPrintIcon}
                         fieldName="user"
                         textValue={formValues.user}
                         changeEvent={handleChangeValues}
-                        classTitle={hasError ? 'input-invalid' : ''}
+                        classTitle={hasErrorUser ? 'input-invalid' : ''}
                     />
 
-                    {!checkCredentials && <ErrorMessage text='Usuário já existe!'/>}
+                    {!checkCredentials && <ErrorMessage text={errorMessage.includes('Usuário') ? errorMessage : ''}/>}
                     
                      <TextField 
                         content="Nascimento" 
@@ -93,7 +110,6 @@ function SignUpTemplate() {
                         fieldName="birth"
                         textValue={formValues.birth}
                         changeEvent={handleChangeValues}
-                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
                      <TextField 
@@ -101,9 +117,8 @@ function SignUpTemplate() {
                         type="text" 
                         icon={emailIcon}
                         fieldName="email"
-                        textValue={formValues.birth}
+                        textValue={formValues.email}
                         changeEvent={handleChangeValues}
-                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
                     <TextField 
@@ -126,7 +141,7 @@ function SignUpTemplate() {
                         classTitle={hasError ? 'input-invalid' : ''}
                     />
 
-                     {!checkCredentials && <ErrorMessage text='As senhas não correspondem!'/>}
+                     {!checkCredentials && <ErrorMessage text={!    errorMessage.includes('Usuário') ? errorMessage : ''}/>}
 
                     <SubmitButton content="Registrar-se" />
                     

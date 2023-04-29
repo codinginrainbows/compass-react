@@ -18,6 +18,7 @@ import { useAccount } from "../../hooks/account"
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     const [hasError, setHasError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [formValues, setFormValues] = useState<ISignIn>({ user: '', password: '' })
 
     const handleChangeValues = (e: any) => {
@@ -35,19 +36,29 @@ function SignInTemplate() {
 
     const { credentials } = useAccount()
 
+    const signInValidator = {
+        emptyForm: formValues.user === '' || formValues.password === '',
+        wrongCredentials: credentials.user !== formValues.user || credentials.password !== formValues.password,
+        login: credentials.user === formValues.user && credentials.password === formValues.password,
+    }
+
     const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if(credentials.user === formValues.user && credentials.password === formValues.password) {
+        if (signInValidator.emptyForm) {
+            setCheckCredentials(false)
+            setErrorMessage('Por favor, preencha todos os campos!')
+            setHasError(true)
+        } else if (signInValidator.wrongCredentials) {
+            setCheckCredentials(false)
+            setErrorMessage('Usuário e/ou Senha inválidos. Por favor, tente novamente!')
+            toast.error('CREDENCIAIS INVÁLIDAS')
+            setHasError(true)
+        } else if (signInValidator.login) {
             setCheckCredentials(true)
             toast.success(`${credentials.user} LOGADO COM SUCESSO`)
             setHasError(false)
-        } else {
-            setCheckCredentials(false)
-            toast.error('CREDENCIAIS INVÁLIDAS')
-            setHasError(true)
         }
-
         return {}
     };
 
@@ -79,7 +90,7 @@ function SignInTemplate() {
                         classTitle={hasError ? 'input-invalid' : ''}
                     />
 
-                    {!checkCredentials && <ErrorMessage text='Usuário e/ou Senha inválidos. Por favor, tente novamente!'/>}
+                    {!checkCredentials && <ErrorMessage text={errorMessage}/>}
                     
                     <SubmitButton content="Logar-se" />
                     
