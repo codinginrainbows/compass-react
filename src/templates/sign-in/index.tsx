@@ -18,11 +18,13 @@ import { useAccount } from "../../hooks/account"
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     const [hasError, setHasError] = useState(false)
-    const [formValues, setFormValues] = useState({ user: '', password: '' })
+    const [formValues, setFormValues] = useState<ISignIn>({ user: '', password: '' })
 
     const handleChangeValues = (e: any) => {
         const textFieldName = e.target.name
         const textFieldValue = e.target.value
+
+        console.log(formValues)
 
         setFormValues((currentValues => {
             return {
@@ -33,20 +35,26 @@ function SignInTemplate() {
 
     const { credentials } = useAccount()
 
-    const handleSubmitForm = ({ user: userTyped, password: passwordTyped }: ISignIn) => {
-        if(credentials.user === userTyped && credentials.password === passwordTyped) {
+    const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        if(credentials.user === formValues.user && credentials.password === formValues.password) {
             setCheckCredentials(true)
             toast.success(`${credentials.user} LOGADO COM SUCESSO`)
+            setHasError(false)
         } else {
             setCheckCredentials(false)
             toast.error('CREDENCIAIS INVÁLIDAS')
+            setHasError(true)
         }
+
+        return {}
     };
 
     return (
         <S.Wrapper>
             <S.Content>
-                <S.Form onSubmit={() => handleSubmitForm}>
+                <S.Form onSubmit={handleSubmitForm}>
                     <FormHeader title="Olá," subTitle="Para continuar navegando de forma segura, efetue o login" />
                     
                     <FormTitle content="Login" />
@@ -55,31 +63,21 @@ function SignInTemplate() {
                         content="Usuário" 
                         type="text" 
                         icon={userIcon}
+                        fieldName="user"
                         textValue={formValues.user}
                         changeEvent={handleChangeValues}
-                        // className={hasError && 'input-invalid'}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
-                    {hasError && (
-                        <>
-                            <ErrorMessage text='Preencha um nome de usuário'/>
-                            {setCheckCredentials(true)}
-                        </>
-                    )}
                           
                     <TextField 
                         content="Senha" 
                         type="password" 
                         icon={lockIcon}
+                        fieldName="password"
                         textValue={formValues.password}
                         changeEvent={handleChangeValues}
-                        // className={hasError && 'input-invalid'}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
-                    {hasError && (
-                        <>
-                            <ErrorMessage text='Preencha uma senha'/>
-                            {setCheckCredentials(true)}
-                        </>
-                    )}
 
                     {!checkCredentials && <ErrorMessage text='Usuário e/ou Senha inválidos. Por favor, tente novamente!'/>}
                     

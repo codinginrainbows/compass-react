@@ -24,172 +24,109 @@ import { useAccount } from "../../hooks/account"
 
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
+    const [hasError, setHasError] = useState(false)
+    const [formValues, setFormValues] = useState<ISignUp>({ name: '', user: '', birth: '', email: '', password: '', confirmPassword: '' })
+
+    const handleChangeValues = (e: any) => {
+        const textFieldName = e.target.name
+        const textFieldValue = e.target.value
+
+        console.log(formValues)
+
+        setFormValues((currentValues => {
+            return {
+                ...currentValues, [textFieldName]: textFieldValue
+            }
+        }))
+    }
     
     const { createAccount, credentials } = useAccount()
 
-    const {
-        control,
-        handleSubmit,
-        setValue,
-        watch,
-    } = useForm({
-        resolver: SignUpValidationSchema,
-        defaultValues: defaultValues,
-    })
-
-    const birthInputValue = watch('birth')
-
-    useEffect(() => {
-        setValue('birth', MaskedDate(birthInputValue))
-    }, [birthInputValue, setValue])
-    
-
-    const handleSubmitForm = ({ user: userTyped, password: passwordTyped}: ISignUp) => {
-        if(userTyped === credentials.user) {
+    const handleSubmitForm = () => {
+        if(formValues.user === credentials.user) {
             setCheckCredentials(false)
-            toast.error(`USUÁRIO ${userTyped} JÁ EXISTE`)
+            toast.error(`USUÁRIO ${formValues.user} JÁ EXISTE`)
         } else {
             setCheckCredentials(true)
-            toast.success(`${userTyped} SUA CONTA FOI CRIADA`)
+            toast.success(`${formValues.user} SUA CONTA FOI CRIADA`)
 
-            createAccount(userTyped, passwordTyped)
+            createAccount(formValues.user, formValues.password)
         }
+
+        return {}
     };
     
     return (
         <S.Wrapper>
             <S.Content>
-                <S.Form onSubmit={handleSubmit(handleSubmitForm)}>
+                <S.Form onSubmit={handleSubmitForm}>
                     <FormHeader title="Olá," subTitle="Por favor, registre-se para continuar" />
                     
                     <FormTitle content="Registro" />
                     
-                    <Controller
-                        name="name"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Nome" 
-                                    type="text" 
-                                    icon={userIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                    <TextField 
+                        content="Nome" 
+                        type="text" 
+                        icon={userIcon}
+                        fieldName="name"
+                        textValue={formValues.name}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
-                    <Controller
-                        name="user"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Usuário" 
-                                    type="text" 
-                                    icon={fingerPrintIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && (
-                                    <>
-                                        <ErrorMessage text={error.message}/>
-                                        {setCheckCredentials(true)}
-                                    </>
-                                )}
-                            </>
-                        )}
+                    <TextField 
+                        content="Usuário" 
+                        type="text" 
+                        icon={userIcon}
+                        fieldName="user"
+                        textValue={formValues.user}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
 
                     {!checkCredentials && <ErrorMessage text='Usuário já existe!'/>}
                     
-                    <Controller
-                        name="birth"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Data de Nascimento" 
-                                    type="text" 
-                                    icon={cakeIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                     <TextField 
+                        content="Nascimento" 
+                        type="date" 
+                        icon={cakeIcon}
+                        fieldName="birth"
+                        textValue={formValues.birth}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
-                    <Controller
-                        name="email"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Email" 
-                                    type="text" 
-                                    icon={emailIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                     <TextField 
+                        content="Email" 
+                        type="text" 
+                        icon={emailIcon}
+                        fieldName="email"
+                        textValue={formValues.birth}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
-                    <Controller
-                        name="password"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Senha" 
-                                    type="password" 
-                                    icon={lockIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                    <TextField 
+                        content="Senha" 
+                        type="password" 
+                        icon={lockIcon}
+                        fieldName="password"
+                        textValue={formValues.password}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
                     
-                    <Controller
-                        name="confirmPassword"
-                        control={control}
-                        render={({
-                            field: { ref, ...fieldProps },
-                            fieldState: { error },
-                        }) => (
-                            <>
-                                <TextField 
-                                    {...fieldProps}
-                                    content="Confirmar Senha" 
-                                    type="password" 
-                                    icon={shieldIcon} 
-                                    className={error && 'input-invalid'}
-                                />
-                                {error && <ErrorMessage text={error.message}/>}
-                            </>
-                        )}
+                    <TextField 
+                        content="Confirmar Senha" 
+                        type="password" 
+                        icon={shieldIcon}
+                        fieldName="confirmPassword"
+                        textValue={formValues.confirmPassword}
+                        changeEvent={handleChangeValues}
+                        classTitle={hasError ? 'input-invalid' : ''}
                     />
+
+                     {!checkCredentials && <ErrorMessage text='As senhas não correspondem!'/>}
 
                     <SubmitButton content="Registrar-se" />
                     
