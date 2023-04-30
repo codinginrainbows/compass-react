@@ -8,7 +8,7 @@ import userIcon from "../../assets/icons/user-icon.svg"
 import lockIcon from "../../assets/icons/lock-icon.svg"
 
 import { ErrorMessage } from "../../components/error-message"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { ISignIn } from "../../models/sign-in"
 import { toast } from "react-toastify"
 
@@ -20,6 +20,8 @@ import { IUser } from "../../models/user"
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     const [hasError, setHasError] = useState(false)
+    const [userExists, setUserExists] = useState(false)
+    const [exe, setExe] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formValues, setFormValues] = useState<ISignIn>({ user: '', password: '' })
 
@@ -34,34 +36,51 @@ function SignInTemplate() {
         }))
     }
 
-    const { credentials } = useAccount()
+    const { credentials, createAccount } = useAccount()
 
-    const { data: dataBase } = useFetchAPI<IUser>('user')
-    console.log(dataBase)
+    const { data: dataBase, state } = useFetchAPI<IUser>('user')  
+
+    useEffect(() => {
+        console.log("🚀 ~ file: index.tsx:45 ~ useEffect ~ userExists:", userExists)
+    }, [userExists])
 
     const signInValidator = {
         emptyForm: formValues.user === '' || formValues.password === '',
         wrongCredentials: credentials.user !== formValues.user || credentials.password !== formValues.password,
-        login: dataBase?.users.forEach(user => user.contains(formValues.user))
+        login: ''
+    }
+
+    const handleValidate = () => {
+        dataBase?.users.forEach(user => {
+            if(user.user === formValues.user) {
+                setUserExists(true)
+                createAccount(user.user, user.password)
+            }
+        })
+
+        return setExe(true)
     }
 
     const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (signInValidator.emptyForm) {
+        handleValidate()
+
+        if (formValues.user === '' || formValues.password === '') {
             setCheckCredentials(false)
             setErrorMessage('Por favor, preencha todos os campos!')
             setHasError(true)
-        } else if (signInValidator.wrongCredentials) {
+        } else if (!userExists) {
             setCheckCredentials(false)
             setErrorMessage('Usuário e/ou Senha inválidos. Por favor, tente novamente!')
             toast.error('CREDENCIAIS INVÁLIDAS')
             setHasError(true)
-        } else if (signInValidator.login) {
+        } else if (userExists) {
             setCheckCredentials(true)
             toast.success(`${credentials.user} LOGADO COM SUCESSO`)
             setHasError(false)
         }
+
         return {}
     };
 

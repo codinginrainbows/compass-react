@@ -24,7 +24,7 @@ function useFetchAPI<T>(endpoint: string) {
             state: "loading"
           }));
           const response = await fetch(`${localBaseURL}/${endpoint}`);
-          if (response.ok) {
+         if (response.ok) {
             const json = await response.json();
             setFetchState({
               data: json,
