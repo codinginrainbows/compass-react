@@ -13,7 +13,7 @@ import { ISignIn } from "../../models/sign-in"
 import { toast } from "react-toastify"
 
 import * as S from './styles'
-import { useAccount } from "../../hooks/account"
+import { useAccount } from "../../hooks/useAccount"
 
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
@@ -24,8 +24,6 @@ function SignInTemplate() {
     const handleChangeValues = (e: any) => {
         const textFieldName = e.target.name
         const textFieldValue = e.target.value
-
-        console.log(formValues)
 
         setFormValues((currentValues => {
             return {

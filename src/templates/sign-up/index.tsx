@@ -17,7 +17,7 @@ import { toast } from "react-toastify"
 import { ErrorMessage } from "../../components/error-message"
 
 import * as S from './styles'
-import { useAccount } from "../../hooks/account"
+import { useAccount } from "../../hooks/useAccount"
 
 function SignUpTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
