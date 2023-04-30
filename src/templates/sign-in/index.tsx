@@ -14,6 +14,8 @@ import { toast } from "react-toastify"
 
 import * as S from './styles'
 import { useAccount } from "../../hooks/useAccount"
+import { useFetchAPI } from "../../hooks/useFetchAPI"
+import { IUser } from "../../models/user"
 
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
@@ -34,10 +36,13 @@ function SignInTemplate() {
 
     const { credentials } = useAccount()
 
+    const { data: dataBase } = useFetchAPI<IUser>('user')
+    console.log(dataBase)
+
     const signInValidator = {
         emptyForm: formValues.user === '' || formValues.password === '',
         wrongCredentials: credentials.user !== formValues.user || credentials.password !== formValues.password,
-        login: credentials.user === formValues.user && credentials.password === formValues.password,
+        login: dataBase?.users.forEach(user => user.contains(formValues.user))
     }
 
     const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
