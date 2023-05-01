@@ -17,19 +17,19 @@ export const GridLayout = styled.div`
         "a b b b"
         "a c c d";
 
-    .um {
+    .left {
         grid-area: a;
     }
     
-    .dois {
+    .top {
         grid-area: b;
     }
     
-    .tres {
+    .center {
         grid-area: c;
     }
     
-    .quatro {
+    .right {
         grid-area: d
     }
 `

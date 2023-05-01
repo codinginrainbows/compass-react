@@ -14,7 +14,7 @@ function Header({ gridPosition }: IHeader) {
                 <S.HomeText>Home</S.HomeText>
             </S.HomeInfoContainer>
             <S.HomeInfoContainer>
-                <S.HomeText>gabriel</S.HomeText>
+                <S.HomeText>Gabriel Garcia</S.HomeText>
                 <ProfilePicture imageAdress='https://picsum.photos/45' />
             </S.HomeInfoContainer>
         </S.Wrapper>

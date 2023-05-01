@@ -16,6 +16,7 @@ import * as S from './styles'
 import { useAccount } from "../../hooks/useAccount"
 import { useFetchAPI } from "../../hooks/useFetchAPI"
 import { IUser } from "../../models/user"
+import { useNavigate } from "react-router-dom"
 
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
@@ -60,9 +61,12 @@ function SignInTemplate() {
 
         return setExe(true)
     }
-
+    const navigate = useNavigate()
+    
     const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
+        navigate('/home')
 
         handleValidate()
 

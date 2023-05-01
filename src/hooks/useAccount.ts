@@ -10,7 +10,7 @@ function useAccount() {
     localStorage.setItem('user', user)
     localStorage.setItem('password', password)
 
-    navigate('/')
+    navigate('/home')
   }
   
   const credentials = {

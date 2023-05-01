@@ -11,9 +11,9 @@ interface TextLinkProps {
 function TextLink({ textBefore, textAfter, link, where }: TextLinkProps) {
     return (
         <S.Wrapper>
-            { textBefore } 
-            <Link to={ where }> { link } </Link>
-            { textAfter } 
+            <S.Text>{ textBefore }</S.Text> 
+                <Link to={ where }> { link } </Link>
+            <S.Text>{ textAfter }</S.Text> 
         </S.Wrapper>
     )
 }
