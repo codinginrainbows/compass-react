@@ -1,5 +1,5 @@
+import { DropDownUsers } from '../../dropdown-users'
 import { Card } from '../home-card'
-import { CreatePost } from '../home-post/create-post'
 import * as S from './styles'
 
 interface IFriends {
@@ -10,16 +10,7 @@ function Friends({ gridPosition }: IFriends) {
     return (
         <S.Wrapper className={gridPosition}>
             <Card>
-                <CreatePost />    
-            </Card>
-            <Card>
-                <CreatePost />    
-            </Card>
-            <Card>
-                <CreatePost />    
-            </Card>
-            <Card>
-                <CreatePost />    
+                <DropDownUsers />   
             </Card>
         </S.Wrapper>
     ) 
