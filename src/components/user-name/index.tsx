@@ -6,9 +6,7 @@ interface UserProps {
 
 function User({ name }: UserProps) {
     return (
-        <S.Wrapper>
-            <S.Name>{ name }</S.Name>
-        </S.Wrapper>
+        <S.Name>{ name }</S.Name>
     )
 }
 

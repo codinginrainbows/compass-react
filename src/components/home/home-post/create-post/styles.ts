@@ -10,8 +10,8 @@ export const InputContainer = styled.div`
 `
 
 export const Input = styled.input`
+    font-size: var(--default);
     flex: 1;
-    margin-left: var(--default);
     border: 0;
     border-radius: 30px;
     padding: 0.8rem 1.5rem;
