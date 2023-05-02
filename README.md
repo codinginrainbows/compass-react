@@ -1,11 +1,15 @@
 # :link: https://gabrielgarcia-compassuol.netlify.app
 
 ## :file_folder: Index
+* [Preview](#camera-preview)
 * [Features](#hammer-features)
 * [Technologies](#rocket-technologies)
 * [Color Scheme](#paintbrush-color-scheme)
 * [Setup Local](#gear-setup)
 * [Developpers](#man_technologist-developers)
+
+## :camera: Preview
+![preview](https://user-images.githubusercontent.com/82886646/235762454-abd0dd0d-234d-4c6f-bca1-cbe3f646f312.gif)
 
 ## :hammer: Features
 
