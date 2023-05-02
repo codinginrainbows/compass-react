@@ -22,9 +22,7 @@
   ✔️ TypeScript <br>
   ✔️ React <br>
   ✔️ React Router <br>
-  ✔️ React-Hook-Form <br>
   ✔️ React Toastify <br>
-  ✔️ Joi <br>
 
 ## :paintbrush: Color Scheme
 
@@ -36,9 +34,9 @@ Background: `#2E2F36` <br>
 
 1. `git clone https://github.com/codinginrainbows/compass-react/` to clone the project
 2. `cd compass-react` to access the project directory
-3. `git checkout production` to access the most updated branch
+3. `git checkout production` to access the branch with the latest updates 
 4. `yarn` to install project dependencies
-5. `yarn start` to run the project
+5. `yarn dev` to run the project
 6. `http://localhost:3000` in your preferred browser to acess the project
 
 ## :man_technologist: Developers
