@@ -37,7 +37,7 @@ Background: `#2E2F36` <br>
 3. `git checkout production` to access the branch with the latest updates 
 4. `yarn` to install project dependencies
 5. `yarn dev` to run the project
-6. `http://localhost:3000` in your preferred browser to acess the project
+6. `http://localhost:3000` in your preferred browser to access the project
 
 ## :man_technologist: Developers
 
