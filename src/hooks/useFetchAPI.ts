@@ -13,7 +13,7 @@ function useFetchAPI<T>(endpoint: string) {
     error: null
   });
 
-  const localBaseURL = 'https://gabrielgarcia-compassuol-backend-cabftorzy-codinginrainbows.vercel.app/api/v1'
+  const localBaseURL = 'https://gabrielgarcia-compassuol-backend.vercel.app/api/v1'
 
   useEffect(
     function () {
