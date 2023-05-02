@@ -1,11 +1,15 @@
 # :link: https://gabrielgarcia-compassuol.netlify.app
 
 ## :file_folder: Index
+* [Preview](#camera-preview)
 * [Features](#hammer-features)
 * [Technologies](#rocket-technologies)
 * [Color Scheme](#paintbrush-color-scheme)
 * [Setup Local](#gear-setup)
 * [Developpers](#man_technologist-developers)
+
+## :camera: Preview
+![preview](https://user-images.githubusercontent.com/82886646/235762454-abd0dd0d-234d-4c6f-bca1-cbe3f646f312.gif)
 
 ## :hammer: Features
 
@@ -22,7 +26,9 @@
   ✔️ TypeScript <br>
   ✔️ React <br>
   ✔️ React Router <br>
+  ✔️ React-Hook-Form <br>
   ✔️ React Toastify <br>
+  ✔️ Joi <br>
 
 ## :paintbrush: Color Scheme
 
@@ -34,10 +40,10 @@ Background: `#2E2F36` <br>
 
 1. `git clone https://github.com/codinginrainbows/compass-react/` to clone the project
 2. `cd compass-react` to access the project directory
-3. `git checkout production` to access the branch with the latest updates 
+3. `git checkout production` to access the most updated branch
 4. `yarn` to install project dependencies
-5. `yarn dev` to run the project
-6. `http://localhost:3000` in your preferred browser to access the project
+5. `yarn start` to run the project
+6. `http://localhost:3000` in your preferred browser to acess the project
 
 ## :man_technologist: Developers
 
