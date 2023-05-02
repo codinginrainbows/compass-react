@@ -7,7 +7,7 @@ import { IUser } from '../../models/user';
 import { useState } from 'react';
 
 function DropDownUsers() {
-    const { data } = useFetchAPI<IUser>('user')
+    const { data } = useFetchAPI<IUser[]>('user')
     const [show, setShow] = useState(true)
 
     
@@ -21,7 +21,7 @@ function DropDownUsers() {
             </S.Header>
             {show && (
                 <S.Content>
-                    {data?.users.map((user) => {
+                    {data?.map((user) => {
                         return (
                             <S.List key={user.email}>
                                 <ProfilePicture imageAdress={'https://picsum.photos/45'} />

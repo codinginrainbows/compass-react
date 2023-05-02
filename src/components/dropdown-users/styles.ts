@@ -18,7 +18,7 @@ export const Content = styled.div`
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
-        width: 1em;
+        width: 12px;
     }
     
     &::-webkit-scrollbar-track {
