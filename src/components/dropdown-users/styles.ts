@@ -36,6 +36,11 @@ export const Header = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
+    cursor: pointer;
+
+    .turnUpsideDown {
+        rotate: 180deg;
+    }
 `
 
 export const Title = styled.div`
@@ -45,6 +50,7 @@ export const Title = styled.div`
 export const Icon = styled.img`
     width: 26px;
     height: 26px;
+    
 `
 
 export const List = styled.div`

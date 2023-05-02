@@ -3,6 +3,9 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
 `
 
+export const Form = styled.form`
+`
+
 export const InputContainer = styled.div`
     display: flex;
     align-items: center;

@@ -8,7 +8,7 @@ interface Post {
     post_date: string,
     description: string,
     likes: number,
-    comments: IComment
+    comments: IComment[]
 }
 
 export interface IPost {

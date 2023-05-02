@@ -6,7 +6,7 @@ interface InteractionProps {
     amount?: string;
 }
 
-function Interaction({ icon, type, amount }: InteractionProps) {
+function Interaction({ icon, type }: InteractionProps) {
     return (
         <S.Wrapper>
             <S.Icon src={ icon } />

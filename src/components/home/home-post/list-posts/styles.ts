@@ -16,6 +16,8 @@ export const UserDetails = styled.div`
 `
 
 export const When = styled.div`
+    display: flex;
+    align-items: center;
     font-size: 1px;
 
     p {
@@ -24,6 +26,12 @@ export const When = styled.div`
 
     div {
         justify-content: left;
+    }
+
+    img {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
     }
 `
 
@@ -115,12 +123,10 @@ export const UserComments = styled.div`
     flex-direction: column;
     gap: 1rem;
     text-align: justify;
-    /* justify-content: flex-start; */
 
     img {
         width: 30px;
         height: 30px;
-        /* margin-right: 1rem; */
     }
 
     h1 {
@@ -128,7 +134,10 @@ export const UserComments = styled.div`
         margin: 0;
         padding: 0;
     }
-    `
+`
+export const AllComments = styled.h4`
+    font-size: 14px;
+`
 
 export const Comment = styled.div`
     display: flex;

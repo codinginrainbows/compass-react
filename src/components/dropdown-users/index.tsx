@@ -10,17 +10,20 @@ function DropDownUsers() {
     const { data } = useFetchAPI<IUser>('user')
     const [show, setShow] = useState(true)
 
+    
     return (
         <S.Wrapper>
-            <S.Header>
+            <S.Header onClick={() => setShow(!show)}>
                 <S.Title>Meus Amigos</S.Title>
-                <S.Icon src={DropDownIcon} onClick={() => setShow(!show)}/>
+                <S.Icon src={DropDownIcon} 
+                    className={show ? 'turnUpsideDown' : ''} 
+                />
             </S.Header>
             {show && (
                 <S.Content>
                     {data?.users.map((user) => {
                         return (
-                            <S.List>
+                            <S.List key={user.email}>
                                 <ProfilePicture imageAdress={'https://picsum.photos/45'} />
                                 <User name={user.name} />
                             </S.List>

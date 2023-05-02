@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
 
     background-color: #1E1F23;
     border: 2px solid #2E2F36;
+    border-left: 0;
 `
 export const HomeInfoContainer = styled.div`
     display: flex;
