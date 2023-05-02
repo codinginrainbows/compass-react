@@ -13,7 +13,7 @@ function useFetchAPI<T>(endpoint: string) {
     error: null
   });
 
-  const localBaseURL = 'http://localhost:3333/api/v1'
+  const localBaseURL = 'http://gabrielgarcia-compassuol-backend.vercel.app/api/v1'
 
   useEffect(
     function () {
