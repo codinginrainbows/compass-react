@@ -68,7 +68,7 @@ function SignUpTemplate() {
             setCheckCredentials(true)
             toast.success(`${formValues.user} SUA CONTA FOI CRIADA`)
 
-            createAccount(formValues.user, formValues.password)
+            createAccount(formValues.user, formValues.password, formValues.name)
         }
 
         return {}

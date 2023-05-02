@@ -8,7 +8,7 @@ import userIcon from "../../assets/icons/user-icon.svg"
 import lockIcon from "../../assets/icons/lock-icon.svg"
 
 import { ErrorMessage } from "../../components/error-message"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { ISignIn } from "../../models/sign-in"
 import { toast } from "react-toastify"
 
@@ -16,13 +16,11 @@ import * as S from './styles'
 import { useAccount } from "../../hooks/useAccount"
 import { useFetchAPI } from "../../hooks/useFetchAPI"
 import { IUser } from "../../models/user"
-import { useNavigate } from "react-router-dom"
 
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     const [hasError, setHasError] = useState(false)
     const [userExists, setUserExists] = useState(false)
-    const [exe, setExe] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formValues, setFormValues] = useState<ISignIn>({ user: '', password: '' })
 
@@ -37,51 +35,35 @@ function SignInTemplate() {
         }))
     }
 
-    const { credentials, createAccount } = useAccount()
+    const { createAccount } = useAccount()
 
-    const { data: dataBase, state } = useFetchAPI<IUser>('user')  
-
-    useEffect(() => {
-        console.log("🚀 ~ file: index.tsx:45 ~ useEffect ~ userExists:", userExists)
-    }, [userExists])
-
-    const signInValidator = {
-        emptyForm: formValues.user === '' || formValues.password === '',
-        wrongCredentials: credentials.user !== formValues.user || credentials.password !== formValues.password,
-        login: ''
-    }
+    const { data: dataBase } = useFetchAPI<IUser[]>('user')  
 
     const handleValidate = () => {
-        dataBase?.users.forEach(user => {
-            if(user.user === formValues.user) {
+        dataBase?.forEach(user => {
+            if(user.user === formValues.user && user.password === formValues.password) {
                 setUserExists(true)
-                createAccount(user.user, user.password)
+                createAccount(user.user, user.password, user.name)
             }
         })
-
-        return setExe(true)
     }
-    const navigate = useNavigate()
     
     const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-
-        navigate('/home')
 
         handleValidate()
 
         if (formValues.user === '' || formValues.password === '') {
             setCheckCredentials(false)
             setErrorMessage('Por favor, preencha todos os campos!')
+            toast.error('CAMPOS VAZIOS')
             setHasError(true)
         } else if (!userExists) {
             setCheckCredentials(false)
             setErrorMessage('Usuário e/ou Senha inválidos. Por favor, tente novamente!')
-            toast.error('CREDENCIAIS INVÁLIDAS')
             setHasError(true)
         } else if (userExists) {
             setCheckCredentials(true)
-            toast.success(`${credentials.user} LOGADO COM SUCESSO`)
             setHasError(false)
         }
 
