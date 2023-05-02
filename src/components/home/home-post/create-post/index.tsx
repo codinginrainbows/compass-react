@@ -17,6 +17,7 @@ interface ICreatePost {
 }
 
 function CreatePost({ posts, handlePosts }: ICreatePost) {
+    const [postContent, setPostContent] = useState('')
     const [newPost, setNewPost] = useState<IPost[]>(
         [
             {
@@ -38,10 +39,12 @@ function CreatePost({ posts, handlePosts }: ICreatePost) {
     const { user } = useAccount()
 
     const handleNewPost = (e: any) => {
+        setPostContent(e.target.value)
+
         setNewPost([{
             user: user,
             post_date: String(new Date()),
-            description: e.target.value,
+            description: postContent,
             likes: Math.floor(Math.random() * 100),
             comments: [
                 {
@@ -58,6 +61,8 @@ function CreatePost({ posts, handlePosts }: ICreatePost) {
         e.preventDefault()
         
         handlePosts([newPost[0], ...posts] as IPost[])
+
+        setPostContent('')
     }
 
     return (
@@ -69,6 +74,7 @@ function CreatePost({ posts, handlePosts }: ICreatePost) {
                         <S.Input 
                             placeholder="No que você está pensando?"
                             onChange={handleNewPost}
+                            value={postContent}
                         />
                     </S.InputContainer>
                     <S.Actions>
