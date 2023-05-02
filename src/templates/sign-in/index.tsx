@@ -53,7 +53,7 @@ function SignInTemplate() {
 
         handleValidate()
 
-        if (formValues.user === '' || formValues.password === '') {
+        if (formValues.user === '' && formValues.password === '') {
             setCheckCredentials(false)
             setErrorMessage('Por favor, preencha todos os campos!')
             toast.error('CAMPOS VAZIOS')
