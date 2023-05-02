@@ -3,14 +3,11 @@ interface IComment {
     comment: string
 }
 
-interface Post {
+export interface IPost {
     user: string,
     post_date: string,
     description: string,
     likes: number,
     comments: IComment[]
-}
-
-export interface IPost {
-    posts: Post[]
+    url_imagem: string
 }
