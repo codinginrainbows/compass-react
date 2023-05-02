@@ -13,3 +13,7 @@ export const Wrapper = styled.div`
         margin-left: 4px;
     }
 `
+
+export const Text = styled.p`
+    font-size: 14px;
+`

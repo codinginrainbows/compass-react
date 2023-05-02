@@ -14,10 +14,13 @@ import { toast } from "react-toastify"
 
 import * as S from './styles'
 import { useAccount } from "../../hooks/useAccount"
+import { useFetchAPI } from "../../hooks/useFetchAPI"
+import { IUser } from "../../models/user"
 
 function SignInTemplate() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     const [hasError, setHasError] = useState(false)
+    const [userExists, setUserExists] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [formValues, setFormValues] = useState<ISignIn>({ user: '', password: '' })
 
@@ -32,31 +35,38 @@ function SignInTemplate() {
         }))
     }
 
-    const { credentials } = useAccount()
+    const { createAccount } = useAccount()
 
-    const signInValidator = {
-        emptyForm: formValues.user === '' || formValues.password === '',
-        wrongCredentials: credentials.user !== formValues.user || credentials.password !== formValues.password,
-        login: credentials.user === formValues.user && credentials.password === formValues.password,
+    const { data: dataBase } = useFetchAPI<IUser[]>('user')  
+
+    const handleValidate = () => {
+        dataBase?.forEach(user => {
+            if(user.user === formValues.user && user.password === formValues.password) {
+                setUserExists(true)
+                createAccount(user.user, user.password, user.name)
+            }
+        })
     }
-
+    
     const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        if (signInValidator.emptyForm) {
+        handleValidate()
+
+        if (formValues.user === '' || formValues.password === '') {
             setCheckCredentials(false)
             setErrorMessage('Por favor, preencha todos os campos!')
+            toast.error('CAMPOS VAZIOS')
             setHasError(true)
-        } else if (signInValidator.wrongCredentials) {
+        } else if (!userExists) {
             setCheckCredentials(false)
             setErrorMessage('Usuário e/ou Senha inválidos. Por favor, tente novamente!')
-            toast.error('CREDENCIAIS INVÁLIDAS')
             setHasError(true)
-        } else if (signInValidator.login) {
+        } else if (userExists) {
             setCheckCredentials(true)
-            toast.success(`${credentials.user} LOGADO COM SUCESSO`)
             setHasError(false)
         }
+
         return {}
     };
 

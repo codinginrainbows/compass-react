@@ -5,20 +5,22 @@ function useAccount() {
 
   const user = localStorage.getItem('user')
   const password = localStorage.getItem('password')
+  const name = localStorage.getItem('name')
 
-  function createAccount(user: string, password: string) {
+  function createAccount(user: string, password: string, name: string) {
     localStorage.setItem('user', user)
     localStorage.setItem('password', password)
+    localStorage.setItem('name', name)
 
-    navigate('/')
+    navigate('/home')
   }
   
   const credentials = {
     user: user,
-    password: password
+    password: password,
   }
 
-  return { createAccount, user, password, credentials }
+  return { createAccount, user, password, name, credentials }
 }
 
 export { useAccount }
