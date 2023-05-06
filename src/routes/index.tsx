@@ -1,14 +1,15 @@
 import { Routes, Route } from 'react-router-dom'
-import { SignInTemplate } from '../templates/sign-in'
-import { SignUpTemplate } from '../templates/sign-up'
-import { HomeTemplate } from '../templates/home'
+import { SignIn } from '../pages/sign-in'
+import { SignUp } from '../pages/sign-up'
+import { Home } from '../pages/home'
 
+// todo: add private routes
 function AppRoutes() {
     return (
         <Routes>
-            <Route path='/' element={<SignInTemplate />} />
-            <Route path='/sign-up' element={<SignUpTemplate />} />
-            <Route path='/home' element={<HomeTemplate />} />
+            <Route path='/' element={<SignIn />} />
+            <Route path='/sign-up' element={<SignUp />} />
+            <Route path='/home' element={<Home />} />
         </Routes>
     )
 }
