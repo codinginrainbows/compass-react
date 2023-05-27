@@ -25,12 +25,6 @@ function CreatePost({ posts, handlePosts }: ICreatePost) {
                 post_date: '',
                 description: '',
                 likes: 0,
-                comments: [
-                    {
-                        user: '',
-                        comment: ''
-                    },
-                ],
                 url_imagem: '',
             }
         ],
@@ -46,12 +40,6 @@ function CreatePost({ posts, handlePosts }: ICreatePost) {
             post_date: String(new Date()),
             description: postContent,
             likes: Math.floor(Math.random() * 100),
-            comments: [
-                {
-                    user: 'gabrielgarcia',
-                    comment: 'PARABÉNS POR POSTAR NA REDE!!!!!!'
-                },
-            ],
             url_imagem: 'https://i.kym-cdn.com/photos/images/facebook/002/515/832/ee7.jpg',
         }] as IPost[])
     }

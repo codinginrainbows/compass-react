@@ -16,14 +16,14 @@ import { User } from '../../../../atoms/user-name'
 import { TextLink } from '../../../../atoms/text-link'
 import { Text } from '../../../../atoms/text'
 import { Separator } from '../../../../atoms/separator'
-
-
+import { IComment } from '../../../../../models/comments'
 
 interface IListPosts {
     posts: IPost[]
+    comments: IComment[]
 }
 
-function ListPosts({ posts }: IListPosts) {
+function ListPosts({ posts, comments }: IListPosts) {
     return (
         <S.Wrapper>
             {posts?.map((post: IPost) => {
@@ -49,7 +49,7 @@ function ListPosts({ posts }: IListPosts) {
                                 </S.Amount>
                                 <S.Amount>
                                     <Interaction type="Comentários" icon={commentsIcon} />
-                                    <S.HowMany>{post.comments?.length ? post.comments?.length : '0'}</S.HowMany>
+                                    <S.HowMany>{comments?.length ? comments?.length : '0'}</S.HowMany>
                                 </S.Amount>
                                 <Interaction type="Compartilhar" icon={shareIcon} />
                             </S.Actions>
@@ -67,16 +67,20 @@ function ListPosts({ posts }: IListPosts) {
                             </S.IconsContainer>
                             </S.InputContainer>
                             <S.UserComments>
-                                {post.comments?.length ? 
+                                {comments?.length ? 
                                 <>
                                     <S.AllComments>Todos os comentários</S.AllComments>
-                                    {post.comments?.map((comment) => {
+                                    {comments?.map((comment) => {
                                         return (
-                                            <S.Comment key={`${comment.comment} ${Math.floor(Math.random() * 100000)}`}>
-                                                <ProfilePicture imageAdress='https://picsum.photos/45' />
-                                                <User name={`${comment.user}: `}/>
-                                                <Text content={comment.comment}  />
-                                            </S.Comment>
+                                            <>
+                                                {post._id === comment.post_id && (
+                                                    <S.Comment key={`${comment.comment} ${Math.floor(Math.random() * 100000)}`}>
+                                                        <ProfilePicture imageAdress='https://picsum.photos/45' />
+                                                        <User name={`${comment.user}: `}/>
+                                                        <Text content={comment.comment}  />
+                                                    </S.Comment>
+                                                )}
+                                            </>
                                         )
                                     })}
                                     <S.ShowAllContainer>
@@ -87,7 +91,6 @@ function ListPosts({ posts }: IListPosts) {
                                 : <Text content={'Ninguém comentou ainda'} />}
                             </S.UserComments>
                         </S.CommentsContainer>
-
                     </Card>
                 )
             })}
