@@ -34,7 +34,7 @@ function SignInForm() {
 
     const { createAccount } = useAccount()
 
-    const { data: dataBase } = useFetchAPI<IUser[]>('user')  
+    const { data: dataBase } = useFetchAPI<IUser[]>('user', 'GET')  
 
     const handleValidate = () => {
         dataBase?.forEach(user => {

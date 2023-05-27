@@ -6,7 +6,7 @@ type UseFetchState<T> = {
   error: null | Error;
 };
 
-function useFetchAPI<T>(endpoint: string) {
+function useFetchAPI<T>(endpoint: string, method: string) {
   const [fetchState, setFetchState] = useState<UseFetchState<T>>({
     state: "idle",
     data: null,
@@ -23,7 +23,9 @@ function useFetchAPI<T>(endpoint: string) {
             ...oldValue,
             state: "loading"
           }));
-          const response = await fetch(`${localBaseURL}/${endpoint}`);
+          const response = await fetch(`${localBaseURL}/${endpoint}`, {
+            method: method,
+          });
           if (response.ok) {
             const json = await response.json();
             setFetchState({
@@ -48,7 +50,7 @@ function useFetchAPI<T>(endpoint: string) {
       }
       fetchData();
     },
-    [endpoint]
+    [endpoint, method]
   );
 
   return fetchState;

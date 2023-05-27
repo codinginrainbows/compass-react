@@ -10,7 +10,7 @@ interface IPosts {
 }
 
 function Posts({ gridPosition }: IPosts) {
-    const { data: postsData } = useFetchAPI<IPost[]>('user/post')
+    const { data: postsData } = useFetchAPI<IPost[]>('user/post', 'GET')
     const [data, setData] = useState<IPost[]>()
 
     useEffect(() => {
