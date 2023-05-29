@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useToken } from "./useToken";
 
 type UseFetchState<T> = {
   state: "idle" | "loading" | "error" | "success";
@@ -6,14 +7,17 @@ type UseFetchState<T> = {
   error: null | Error;
 };
 
-function useFetchAPI<T>(endpoint: string) {
+function useFetchAPI<T>(endpoint: string, method: string, body?: T) {
   const [fetchState, setFetchState] = useState<UseFetchState<T>>({
     state: "idle",
     data: null,
     error: null
   });
 
-  const localBaseURL = 'https://gabrielgarcia-compassuol-backend.vercel.app/api/v1'
+  const { token } = useToken()
+
+  // const localBaseURL = 'https://gabrielgarcia-compassuol-backend.vercel.app/api/v1'
+  const localBaseURL = 'http://localhost:3001/api/v1'
 
   useEffect(
     function () {
@@ -23,7 +27,14 @@ function useFetchAPI<T>(endpoint: string) {
             ...oldValue,
             state: "loading"
           }));
-          const response = await fetch(`${localBaseURL}/${endpoint}`);
+          
+          const response = await fetch(`${localBaseURL}/${endpoint}`, {
+            method: method,
+            headers: {
+              authorization: `Bearer ${token}`
+            }
+          });
+          
           if (response.ok) {
             const json = await response.json();
             setFetchState({
@@ -48,7 +59,7 @@ function useFetchAPI<T>(endpoint: string) {
       }
       fetchData();
     },
-    [endpoint]
+    [endpoint, method]
   );
 
   return fetchState;
