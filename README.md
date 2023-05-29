@@ -1,4 +1,4 @@
-# :link: https://gabrielgarcia-compassuol.netlify.app
+# :link: https://github.com/codinginrainbows/compass-nest
 
 ## :file_folder: Index
 * [Preview](#camera-preview)
@@ -26,7 +26,6 @@
   ✔️ TypeScript <br>
   ✔️ React <br>
   ✔️ React Router <br>
-  ✔️ React-Hook-Form <br>
   ✔️ React Toastify <br>
   ✔️ Joi <br>
 
@@ -38,12 +37,18 @@ Background: `#2E2F36` <br>
 
 ## :gear: Setup
 
-1. `git clone https://github.com/codinginrainbows/compass-react/` to clone the project
-2. `cd compass-react` to access the project directory
-3. `git checkout production` to access the most updated branch
-4. `yarn` to install project dependencies
-5. `yarn start` to run the project
-6. `http://localhost:3000` in your preferred browser to acess the project
+Run backend and after it run this project. Instructions down below.
+
+1. `git clone https://github.com/codinginrainbows/compass-nest` to clone the backend
+2. `cd compass-nest` to access the backend directory
+3. `npm i` to install backend dependencies
+4. `npm run start:dev` to run the backend
+5. `git clone https://github.com/codinginrainbows/compass-react/` to clone the project
+6. `cd compass-react` to access the project directory
+7. `git checkout production` to access the most updated branch
+8. `yarn` to install project dependencies
+9. `yarn start` to run the project
+10. `http://localhost:3000` in your preferred browser to acess the project
 
 ## :man_technologist: Developers
 
