@@ -1,7 +1,7 @@
 export interface ISignUp {
     name: string,
     user: string,
-    birth: string,
+    birthdate: string,
     email: string,
     password: string,
     confirmPassword: string,

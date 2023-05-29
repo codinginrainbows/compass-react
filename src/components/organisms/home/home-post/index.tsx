@@ -11,11 +11,11 @@ interface IPosts {
 }
 
 function Posts({ gridPosition }: IPosts) {
-    const { data: postsData } = useFetchAPI<IPost[]>('posts')
-    const { data: commentsData } = useFetchAPI<IComment[]>('comments')
+    const { data: postsData } = useFetchAPI<IPost[]>('posts', 'GET')
+    const { data: commentsData } = useFetchAPI<IComment[]>('comments', 'GET')
     const [posts, setPosts] = useState<IPost[]>()
     const [comments, setComments] = useState<IComment[]>()
-
+    
     useEffect(() => {
         setPosts(postsData as IPost[])
         setComments(commentsData as IComment[])

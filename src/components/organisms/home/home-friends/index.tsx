@@ -11,7 +11,7 @@ interface IFriends {
 }
 
 function Friends({ gridPosition }: IFriends) {
-    const { data } = useFetchAPI<IUser[]>('users')
+    const { data } = useFetchAPI<IUser[]>('users', 'GET')
 
     return (
         <S.Wrapper className={gridPosition}>

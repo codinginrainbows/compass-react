@@ -9,6 +9,8 @@ import { useState } from 'react'
 import { useAccount } from '../../../../../hooks/useAccount'
 import { ProfilePicture } from '../../../../atoms/profile-picture'
 import { Card } from '../../../../molecules/card'
+import { newPost as addNewPost } from '../../../../../services/newPost'
+import { toast } from 'react-toastify'
 
 interface ICreatePost {
     posts: IPost[]
@@ -18,38 +20,41 @@ interface ICreatePost {
 
 function CreatePost({ posts, handlePosts }: ICreatePost) {
     const [postContent, setPostContent] = useState('')
-    const [newPost, setNewPost] = useState<IPost[]>(
-        [
-            {
-                user: '',
-                post_date: '',
-                description: '',
-                likes: 0,
-                url_imagem: '',
-            }
-        ],
+    const [newPost, setNewPost] = useState<IPost>(
+        {
+            user: '',
+            post_date: '',
+            description: '',
+            likes: 0,
+            url_image: '',
+        }
     )
 
+    
     const { user } = useAccount()
-
+    
     const handleNewPost = (e: any) => {
         setPostContent(e.target.value)
 
-        setNewPost([{
+        setNewPost({
             user: user,
             post_date: String(new Date()),
             description: postContent,
-            likes: Math.floor(Math.random() * 100),
-            url_imagem: 'https://i.kym-cdn.com/photos/images/facebook/002/515/832/ee7.jpg',
-        }] as IPost[])
+            likes: 0,
+            url_image: 'https://source.unsplash.com/random/800x800/?img=1'
+        } as IPost)
     }
     
-    const handleCreatePost = (e: React.FormEvent<HTMLFormElement>) => {
+    
+    const handleCreatePost = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         
-        handlePosts([newPost[0], ...posts] as IPost[])
-
-        setPostContent('')
+        try {
+            await addNewPost(newPost)
+            window.location.reload()
+        } catch(err: any) {
+            toast.error(err.response.data.message[0])
+        }
     }
 
     return (

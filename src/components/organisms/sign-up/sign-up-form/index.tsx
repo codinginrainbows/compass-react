@@ -7,7 +7,6 @@ import lockIcon from "../../../../assets/icons/lock-icon.svg"
 import shieldIcon from "../../../../assets/icons/shield-icon.svg"
 import * as S from "./styles"
 import { ISignUp } from "../../../../models/sign-up"
-import { useAccount } from "../../../../hooks/useAccount"
 import { toast } from "react-toastify"
 import { FormHeader } from "../../form/form-header"
 import { FormTitle } from "../../form/form-title"
@@ -15,13 +14,24 @@ import { TextField } from "../../../atoms/text-field"
 import { ErrorMessage } from "../../../atoms/error-message"
 import { SubmitButton } from "../../../atoms/button"
 import { TextLink } from "../../../atoms/text-link"
+import { signUp } from "../../../../services/signUp"
+import { useNavigate } from "react-router-dom"
 
 function SignUpForm() {
     const [checkCredentials, setCheckCredentials] = useState(true)
     const [hasError, setHasError] = useState(false)
     const [hasErrorUser, setHasErrorUser] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
-    const [formValues, setFormValues] = useState<ISignUp>({ name: '', user: '', birth: '', email: '', password: '', confirmPassword: '' })
+    const [formValues, setFormValues] = useState<ISignUp>({   
+        name: '', 
+        user: '', 
+        birthdate: '', 
+        email: '', 
+        password: '', 
+        confirmPassword: '' 
+    })
+
+    const navigate = useNavigate()
 
     const handleChangeValues = (e: any) => {
         const textFieldName = e.target.name
@@ -36,26 +46,17 @@ function SignUpForm() {
         }))
     }
     
-    const { createAccount, credentials } = useAccount()
-
     const signUpValidator = {
-        emptyForm: formValues.name === '' || formValues.birth === '' || formValues.email === '',
-        userAlreadyExists: formValues.user === credentials.user,
+        emptyForm: formValues.name === '' || formValues.birthdate === '' || formValues.email === '',
         passwordsDoesNotMatch: formValues.confirmPassword !== formValues.password,
     }
 
-    const handleSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         
         if (signUpValidator.emptyForm) {
             setCheckCredentials(false)
             setErrorMessage('Por favor, preencha todos os campos!')
-        } else if(signUpValidator.userAlreadyExists) {
-            setCheckCredentials(false)
-            setErrorMessage(`Usuário ${formValues.user} já existe!`)
-            toast.error(`USUÁRIO ${formValues.user} JÁ EXISTE`)
-            setHasErrorUser(true)
-            setHasError(false)
         } else if (signUpValidator.passwordsDoesNotMatch) {
             setCheckCredentials(false)
             setErrorMessage('As senhas não correspondem!')
@@ -63,9 +64,15 @@ function SignUpForm() {
             setHasErrorUser(false)
         } else {
             setCheckCredentials(true)
-            toast.success(`${formValues.user} SUA CONTA FOI CRIADA`)
-
-            createAccount(formValues.user, formValues.password, formValues.name)
+            setHasError(false)
+            
+            try {
+                await signUp(formValues)
+                toast.success(`${formValues.user} SUA CONTA FOI CRIADA`)
+                navigate('/')
+            } catch(err: any) {
+                toast.error(err.response.data.message[0])
+            }
         }
 
         return {}
@@ -102,8 +109,8 @@ function SignUpForm() {
                         content="Nascimento" 
                         type="date" 
                         icon={cakeIcon}
-                        fieldName="birth"
-                        textValue={formValues.birth}
+                        fieldName="birthdate"
+                        textValue={formValues.birthdate}
                         changeEvent={handleChangeValues}
                     />
                     
@@ -136,7 +143,7 @@ function SignUpForm() {
                         classTitle={hasError ? 'input-invalid' : ''}
                     />
 
-                     {!checkCredentials && <ErrorMessage text={!    errorMessage.includes('Usuário') ? errorMessage : ''}/>}
+                     {!checkCredentials && <ErrorMessage text={!errorMessage.includes('Usuário') ? errorMessage : ''}/>}
 
                     <SubmitButton content="Registrar-se" />
                     
