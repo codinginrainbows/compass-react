@@ -17,6 +17,11 @@ import { TextLink } from '../../../../atoms/text-link'
 import { Text } from '../../../../atoms/text'
 import { Separator } from '../../../../atoms/separator'
 import { IComment } from '../../../../../models/comments'
+import { useState } from 'react'
+import { useAccount } from '../../../../../hooks/useAccount'
+import { newComment as addNewComment } from '../../../../../services/newComment'
+import { format } from 'date-fns'
+import { toast } from 'react-toastify'
 
 interface IListPosts {
     posts: IPost[]
@@ -24,6 +29,39 @@ interface IListPosts {
 }
 
 function ListPosts({ posts, comments }: IListPosts) {
+    const [commentContent, setCommentContent] = useState('')
+    const [newComment, setNewComment] = useState<IComment>(
+        {
+            post_id: '',
+            user: '',
+            comment: '',
+        }
+    )
+
+    const { user } = useAccount()
+    
+    const handleNewComment = (e: any) => {
+        setCommentContent(e.target.value)
+
+        setNewComment({
+            post_id: '',
+            user: '',
+            comment: '',
+        } as IComment)
+    }
+    
+    
+    const handlePostComment = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        
+        try {
+            await addNewComment(newComment)
+            window.location.reload()
+        } catch(err: any) {
+            toast.error(err.response.data.message[0])
+        }
+    }
+    
     return (
         <S.Wrapper>
             {posts?.map((post: IPost) => {
@@ -35,13 +73,13 @@ function ListPosts({ posts, comments }: IListPosts) {
                                 <User name={post.user} />
                                 <S.When>
                                     <S.Icon src={clockIcon} />
-                                    <TextLink textBefore={`${post.post_date} em `} where={'/home'} link={'Rio Grande'} />
+                                    <TextLink textBefore={`${format(new Date(post.post_date), 'dd/mm/yyy')} em `} where={'/home'} link={'Rio Grande'} />
                                 </S.When>
                             </S.UserDetails>
                         </S.UserInfo>
                         <S.Content>
                             <S.Text>{post.description}</S.Text>
-                            {post.url_imagem && <S.Image src={post.url_imagem} />}
+                            {post.url_image && <S.Image src={post.url_image} alt='Erro ao carregar imagem'/>}
                             <S.Actions>
                                 <S.Amount>
                                     <Interaction type="Curtiu" icon={likesIcon} />
@@ -49,22 +87,30 @@ function ListPosts({ posts, comments }: IListPosts) {
                                 </S.Amount>
                                 <S.Amount>
                                     <Interaction type="Comentários" icon={commentsIcon} />
-                                    <S.HowMany>{comments?.length ? comments?.length : '0'}</S.HowMany>
+                                    {comments?.map((comment) => {
+                                        return (
+                                            <>
+                                                {post._id === comment.post_id ? (    
+                                                    <S.HowMany>{comments?.length && comments?.length}</S.HowMany>
+                                                ) : '0'}
+                                            </>
+                                        )
+                                    })}
                                 </S.Amount>
                                 <Interaction type="Compartilhar" icon={shareIcon} />
                             </S.Actions>
                         </S.Content>
                         <S.CommentsContainer>
                             <S.InputContainer>
-                            <ProfilePicture imageAdress='https://picsum.photos/45' />
-                            <S.IconsContainer>
-                                <S.Input placeholder='No que você está pensando?'/>
-                                <S.Icon src={cameraIcon} />
-                                <S.Icon src={pictureIcon} />
-                                <S.Icon src={fileIcon} />
-                                <S.Icon src={locationIcon} />
-                                <S.Icon src={smileyFaceIcon} />
-                            </S.IconsContainer>
+                                <ProfilePicture imageAdress='https://picsum.photos/45' />
+                                <S.IconsContainer>
+                                    <S.Input placeholder='No que você está pensando?' />
+                                    <S.Icon src={cameraIcon} />
+                                    <S.Icon src={pictureIcon} />
+                                    <S.Icon src={fileIcon} />
+                                    <S.Icon src={locationIcon} />
+                                    <S.Icon src={smileyFaceIcon} />
+                                </S.IconsContainer>
                             </S.InputContainer>
                             <S.UserComments>
                                 {comments?.length ? 
@@ -93,7 +139,7 @@ function ListPosts({ posts, comments }: IListPosts) {
                         </S.CommentsContainer>
                     </Card>
                 )
-            })}
+            }).reverse()}
         </S.Wrapper>
     ) 
 }
